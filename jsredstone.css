@@ -1,0 +1,404 @@
+/*
+This file is part of JSRedstone - A Javascript Minecraft Redstone simulator
+Copyright (c) 2011 Nicolas Joyard
+
+JSRedstone is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+JSRedstone is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with JSRedstone.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+/******************************* UI *******************************/
+
+/* General */
+
+body, textarea {
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	font-size: 10pt;
+}
+
+#version, #status {
+	position: absolute;
+	left: 0;
+	color: white;
+	font-weight: bold;
+	font-size: 0.8em;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	z-index: 99999;
+}
+
+#version {
+	bottom: 0;
+}
+
+#status {
+	top: 0;
+}
+
+/* Toolbar */
+
+#toolbar {
+	position: absolute;
+	height: 44px;
+	bottom: 0;
+	left: 50%;
+	background-image: url(img/tb_bg.png);
+	background-position: 2px 0;
+}
+
+#toolbar_left {
+	width: 38px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	background-image: url(img/tb_left.png);
+}
+
+#toolbar_right {
+	width: 16px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-image: url(img/tb_right.png);
+}
+
+.tool {
+	position: absolute;
+	background: url(img/textures.png) 0 0 no-repeat;
+	width: 32px;
+	height: 32px;
+}
+
+.toolbg {
+	position: absolute;
+	height: 28px;
+	width: 28px;
+}
+
+.toolbg.selected {
+	background-color: white;
+	opacity: 0.5;
+}
+
+.toollabel {
+	color: white;
+	font-weight: bold;
+	position: absolute;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	bottom: 0;
+	right: 0;
+}
+
+/* Viewport */
+
+#viewport {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	overflow: hidden;
+	background: url(img/bg.png);
+}
+
+#xaxis {
+	height: 1px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: black;
+	opacity: 0.5;
+}
+
+#yaxis {
+	width: 1px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	background-color: black;
+	opacity: 0.5;
+}
+
+.arrow {
+	position: absolute;
+	display: none;
+	background: url(img/textures.png) 0 0 no-repeat;
+	width: 32px;
+	height: 32px;
+}
+
+.arrow.visible {
+	display: block;
+}
+
+.arrow_n, .arrow_s {
+	left: 50%;
+	margin-left: -16px;
+}
+
+.arrow_e, .arrow_w {
+	top: 50%;
+	margin-top: -16px;
+}
+
+.arrow_n { top: 0; }
+.arrow_s { bottom: 44px; }
+.arrow_w { left: 0; }
+.arrow_e { right: 0; }
+
+.vpitem {
+	/* Generic class for viewport items
+		margin-top|left are used to pan the viewport */
+	margin-top: 0;
+	margin-left: 0;
+}
+
+.level {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	overflow: hidden;
+	display: none;
+}
+
+.level + .level {
+	/* Add transparent background to all levels except the first one */
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.level.active, .level.below {
+	/* Active level and levels below are displayed */
+	display: block;
+}
+
+
+.vblock {
+	opacity: 0.75;
+}
+
+
+.vblock.remove {
+	background: red;
+	opacity: 0.5;
+}
+
+/* Dialogs */
+
+.loadsave_bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: black;
+	opacity: 0.5;
+}
+
+.loadsave_box {
+	position: absolute;
+	
+	width: 500px;
+	margin-left: -255px;
+	left: 50%;
+	bottom: 50px;
+	
+	background-color: black;
+	padding: 1em;
+	
+	border-radius: 10px;
+	color: white;
+	opacity: 0.8;
+}
+
+.loadsave_box h1 {
+	margin: 0;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+.loadsave_box h2 {
+	margin: 1em 0 0 0;
+	font-size: 1em;
+	font-weight: bold;
+	color: #888899;
+}
+
+.loadsave_box input.close {
+	float: right;
+}
+
+.loadsave_box textarea {
+	width: 100%;
+	height: 100px;
+}
+
+
+/* Blocks */
+
+.block, .vblock, .wire_overlay {
+	position: absolute;
+	display: block;
+	background: url(img/textures.png) 0 0 no-repeat;
+	width: 32px;
+	height: 32px;
+}
+
+.wire_overlay {
+	top: 0;
+	left: 0;
+}
+
+.wire_label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+	font-size: 7pt;
+	background-color: #FFFF88;
+}
+
+/******************************* Sprites *******************************/
+
+/* Tools */
+.torchtool		{ background-position: -192px -64px; }
+.rstool 		{ background-position: -224px -64px; }
+.reptool 		{ background-position: -256px -64px; }
+.shovel 		{ background-position: -288px -64px; }
+.solidtool 		{ background-position: -320px -64px; }
+.buttontool		{ background-position: -192px -96px; }
+.newtool 		{ background-position: -224px -96px; }
+.loadtool 		{ background-position: -320px -128px; }
+.savetool 		{ background-position: -256px -96px; }
+.selecttool		{ background-position: -288px -96px; }
+.probetool 		{ background-position: -320px -96px; }
+.pantool 		{ background-position: -320px -160px; }
+.levertool 		{ background-position: -320px -192px; }
+
+/* Arrows */
+
+.arrow_w		{ background-position: -160px -256px; }
+.arrow_e		{ background-position: -192px -256px; }
+.arrow_n		{ background-position: -160px -288px; }
+.arrow_s		{ background-position: -192px -288px; }
+
+/* Redstone wire */
+.B_rson_ew		{ background-position: 0 0; }
+.B_rson_ns		{ background-position: -32px 0; }
+.B_rson_nsew	{ background-position: -64px 0; }
+.B_rson_sew		{ background-position: -96px 0; }
+.B_rson_nsw		{ background-position: -128px 0; }
+.B_rson_new		{ background-position: -160px 0; }
+.B_rson_nse		{ background-position: -192px 0; }
+.B_rson_ne		{ background-position: -224px 0; }
+.B_rson_se		{ background-position: -256px 0; }
+.B_rson_sw		{ background-position: -288px 0; }
+.B_rson_nw		{ background-position: -320px 0; }
+
+.B_rsoff_ew		{ background-position: 0 -32px; }
+.B_rsoff_ns		{ background-position: -32px -32px; }
+.B_rsoff_nsew	{ background-position: -64px -32px; }
+.B_rsoff_sew	{ background-position: -96px -32px; }
+.B_rsoff_nsw	{ background-position: -128px -32px; }
+.B_rsoff_new	{ background-position: -160px -32px; }
+.B_rsoff_nse	{ background-position: -192px -32px; }
+.B_rsoff_ne		{ background-position: -224px -32px; }
+.B_rsoff_se		{ background-position: -256px -32px; }
+.B_rsoff_sw		{ background-position: -288px -32px; }
+.B_rsoff_nw		{ background-position: -320px -32px; }
+
+/* Redstone torch */
+.B_torchon_c	{ background-position: 0 -64px; }
+.B_torchon_s	{ background-position: -32px -64px; }
+.B_torchon_n	{ background-position: -64px -64px; }
+.B_torchon_w	{ background-position: -96px -64px; }
+.B_torchon_e	{ background-position: -128px -64px; }
+
+.B_torchoff_c	{ background-position: 0 -96px; }
+.B_torchoff_s	{ background-position: -32px -96px; }
+.B_torchoff_n	{ background-position: -64px -96px; }
+.B_torchoff_w	{ background-position: -96px -96px; }
+.B_torchoff_e	{ background-position: -128px -96px; }
+
+/* Repeater */
+.B_rep1off_n	{ background-position: 0 -128px; }
+.B_rep2off_n	{ background-position: -32px -128px; }
+.B_rep3off_n	{ background-position: -64px -128px; }
+.B_rep4off_n	{ background-position: -96px -128px; }
+.B_rep1on_n		{ background-position: 0 -160px; }
+.B_rep2on_n		{ background-position: -32px -160px; }
+.B_rep3on_n		{ background-position: -64px -160px; }
+.B_rep4on_n		{ background-position: -96px -160px; }
+
+.B_rep1off_s	{ background-position: -96px -224px; }
+.B_rep2off_s	{ background-position: -64px -224px; }
+.B_rep3off_s	{ background-position: -32px -224px; }
+.B_rep4off_s	{ background-position: 0 -224px; }
+.B_rep1on_s		{ background-position: -96px -192px; }
+.B_rep2on_s		{ background-position: -64px -192px; }
+.B_rep3on_s		{ background-position: -32px -192px; }
+.B_rep4on_s		{ background-position: 0 -192px; }
+
+.B_rep1off_e	{ background-position: -160px -128px; }
+.B_rep2off_e	{ background-position: -160px -160px; }
+.B_rep3off_e	{ background-position: -160px -192px; }
+.B_rep4off_e	{ background-position: -160px -224px; }
+.B_rep1on_e		{ background-position: -128px -128px; }
+.B_rep2on_e		{ background-position: -128px -160px; }
+.B_rep3on_e		{ background-position: -128px -192px; }
+.B_rep4on_e		{ background-position: -128px -224px; }
+
+.B_rep1off_w	{ background-position: -192px -224px; }
+.B_rep2off_w	{ background-position: -192px -192px; }
+.B_rep3off_w	{ background-position: -192px -160px; }
+.B_rep4off_w	{ background-position: -192px -128px; }
+.B_rep1on_w		{ background-position: -224px -224px; }
+.B_rep2on_w		{ background-position: -224px -192px; }
+.B_rep3on_w		{ background-position: -224px -160px; }
+.B_rep4on_w		{ background-position: -224px -128px; }
+
+/* Button */
+.B_butoff_n		{ background-position: -256px -128px; }
+.B_butoff_s		{ background-position: -256px -192px; }
+.B_butoff_e		{ background-position: -256px -160px; }
+.B_butoff_w		{ background-position: -256px -224px; }
+
+.B_buton_n		{ background-position: -288px -128px; }
+.B_buton_s		{ background-position: -288px -192px; }
+.B_buton_e		{ background-position: -288px -160px; }
+.B_buton_w		{ background-position: -288px -224px; }
+
+/* Lever */
+.B_levon_c		{ background-position: 0 -256px; }
+.B_levon_e		{ background-position: -32px -256px; }
+.B_levon_w		{ background-position: -64px -256px; }
+.B_levon_n		{ background-position: -96px -256px; }
+.B_levon_s		{ background-position: -128px -256px; }
+
+.B_levoff_c		{ background-position: 0 -288px; }
+.B_levoff_e		{ background-position: -32px -288px; }
+.B_levoff_w		{ background-position: -64px -288px; }
+.B_levoff_n		{ background-position: -96px -288px; }
+.B_levoff_s		{ background-position: -128px -288px; }
+
+/* Misc */
+.B_solid		{ background-position: -160px -64px; }
+.B_remove		{
+	background-position: -1024px -1024px;
+	background-color: red;
+	opacity: 0.5;
+}
